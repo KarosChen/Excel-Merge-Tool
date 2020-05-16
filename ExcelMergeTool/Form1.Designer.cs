@@ -1,6 +1,6 @@
 ﻿namespace ExcelMergeTool
 {
-    partial class Form1
+    partial class ExcelMergeForm
     {
         /// <summary>
         /// 設計工具所需的變數。
@@ -28,13 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.addExcelButton = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // addExcelButton
+            // 
+            this.addExcelButton.Location = new System.Drawing.Point(613, 12);
+            this.addExcelButton.Name = "addExcelButton";
+            this.addExcelButton.Size = new System.Drawing.Size(153, 59);
+            this.addExcelButton.TabIndex = 0;
+            this.addExcelButton.Text = "加入Excel";
+            this.addExcelButton.UseVisualStyleBackColor = true;
+            this.addExcelButton.Click += new System.EventHandler(this.addExcelButton_Click);
+            // 
+            // ExcelMergeForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(778, 544);
+            this.Controls.Add(this.addExcelButton);
+            this.Name = "ExcelMergeForm";
+            this.Text = "Excel Merge Tool";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button addExcelButton;
     }
 }
 

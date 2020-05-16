@@ -10,11 +10,34 @@ using System.Windows.Forms;
 
 namespace ExcelMergeTool
 {
-    public partial class Form1 : Form
+    public partial class ExcelMergeForm : Form
     {
-        public Form1()
+        private Model model;
+        public ExcelMergeForm()
         {
             InitializeComponent();
+            model = new Model();
+        }
+
+        private void addExcelButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+                openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+                openFileDialog.RestoreDirectory = false;
+                openFileDialog.Multiselect = true;
+                openFileDialog.Title = "選擇要合併的Excel檔案";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    foreach (string fileName in openFileDialog.FileNames)
+                    {
+                        model.AddNewFileName(fileName);
+                    }
+                }
+
+            }
         }
     }
 }

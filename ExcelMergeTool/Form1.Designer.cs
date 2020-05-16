@@ -50,7 +50,7 @@
             this.fileNameListBox.Location = new System.Drawing.Point(12, 12);
             this.fileNameListBox.Name = "fileNameListBox";
             this.fileNameListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.fileNameListBox.Size = new System.Drawing.Size(595, 472);
+            this.fileNameListBox.Size = new System.Drawing.Size(596, 310);
             this.fileNameListBox.TabIndex = 1;
             // 
             // deleteExcelButton

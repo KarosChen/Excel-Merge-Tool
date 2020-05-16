@@ -14,20 +14,22 @@ namespace ExcelMergeTool
 {
     public partial class ExcelMergeForm : Form
     {
-        private Model model;
+        private string _currentDirectory = "";
+        private Model _model;
         public ExcelMergeForm()
         {
             InitializeComponent();
-            model = new Model();
+            _model = new Model();
+            _currentDirectory = System.IO.Directory.GetCurrentDirectory();
         }
 
         private void addExcelButton_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+                openFileDialog.InitialDirectory = _currentDirectory;
                 openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
-                openFileDialog.RestoreDirectory = false;
+                openFileDialog.RestoreDirectory = true;
                 openFileDialog.Multiselect = true;
                 openFileDialog.Title = "選擇要合併的Excel檔案";
 
@@ -35,8 +37,9 @@ namespace ExcelMergeTool
                 {
                     foreach (string fileName in openFileDialog.FileNames)
                     {
-                        model.AddNewFileName(fileName);
+                        _model.AddNewFileName(fileName);
                         fileNameListBox.Items.Add(fileName);
+                        _currentDirectory = Path.GetDirectoryName(fileName);
                     }
                 }
 
@@ -48,6 +51,7 @@ namespace ExcelMergeTool
             List<string> fileNames = fileNameListBox.SelectedItems.Cast<string>().ToList();
             foreach (string fileName in fileNames)
             {
+                _model.DeleteFileName(fileName);
                 fileNameListBox.Items.Remove(fileName);
             }
         }

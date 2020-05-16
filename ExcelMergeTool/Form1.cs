@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,11 +45,10 @@ namespace ExcelMergeTool
 
         private void deleteExcelButton_Click(object sender, EventArgs e)
         {
-            foreach (int index in fileNameListBox.SelectedIndices)
+            List<string> fileNames = fileNameListBox.SelectedItems.Cast<string>().ToList();
+            foreach (string fileName in fileNames)
             {
-                string fileName = fileNameListBox.Items[index].ToString();
-                model.DeleteFileName(fileName);
-                fileNameListBox.Items.RemoveAt(index);
+                fileNameListBox.Items.Remove(fileName);
             }
         }
     }

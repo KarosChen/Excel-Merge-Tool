@@ -34,9 +34,20 @@ namespace ExcelMergeTool
                     foreach (string fileName in openFileDialog.FileNames)
                     {
                         model.AddNewFileName(fileName);
+                        fileNameListBox.Items.Add(fileName);
                     }
                 }
 
+            }
+        }
+
+        private void deleteExcelButton_Click(object sender, EventArgs e)
+        {
+            foreach (int index in fileNameListBox.SelectedIndices)
+            {
+                string fileName = fileNameListBox.Items[index].ToString();
+                model.DeleteFileName(fileName);
+                fileNameListBox.Items.RemoveAt(index);
             }
         }
     }

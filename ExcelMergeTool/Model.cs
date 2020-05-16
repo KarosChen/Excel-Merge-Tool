@@ -14,6 +14,10 @@ namespace ExcelMergeTool
         {
             fileNames.Add(fileName);
         }
-
+        
+        public void DeleteFileName (string fileName)
+        {
+            fileNames.Remove(fileName);
+        }
     }
 }

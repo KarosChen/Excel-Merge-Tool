@@ -8,3 +8,11 @@ D:\Program Dev\ExcelMergeTool\ExcelMergeTool\obj\Debug\ExcelMergeTool.csproj.Gen
 D:\Program Dev\ExcelMergeTool\ExcelMergeTool\obj\Debug\ExcelMergeTool.csproj.CoreCompileInputs.cache
 D:\Program Dev\ExcelMergeTool\ExcelMergeTool\obj\Debug\ExcelMergeTool.exe
 D:\Program Dev\ExcelMergeTool\ExcelMergeTool\obj\Debug\ExcelMergeTool.pdb
+D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Spire.License.dll
+D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Spire.Pdf.dll
+D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Spire.XLS.dll
+D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Microsoft.mshtml.dll
+D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Spire.License.xml
+D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Spire.Pdf.xml
+D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Spire.XLS.xml
+D:\Program Dev\ExcelMergeTool\ExcelMergeTool\obj\Debug\ExcelMergeTool.csproj.CopyComplete

@@ -31,6 +31,7 @@
             this.addExcelButton = new System.Windows.Forms.Button();
             this.fileNameListBox = new System.Windows.Forms.ListBox();
             this.deleteExcelButton = new System.Windows.Forms.Button();
+            this.mergeButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // addExcelButton
@@ -63,11 +64,22 @@
             this.deleteExcelButton.UseVisualStyleBackColor = true;
             this.deleteExcelButton.Click += new System.EventHandler(this.deleteExcelButton_Click);
             // 
+            // mergeButton
+            // 
+            this.mergeButton.Location = new System.Drawing.Point(615, 147);
+            this.mergeButton.Name = "mergeButton";
+            this.mergeButton.Size = new System.Drawing.Size(151, 61);
+            this.mergeButton.TabIndex = 3;
+            this.mergeButton.Text = "合併";
+            this.mergeButton.UseVisualStyleBackColor = true;
+            this.mergeButton.Click += new System.EventHandler(this.mergeButton_Click);
+            // 
             // ExcelMergeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(778, 544);
+            this.Controls.Add(this.mergeButton);
             this.Controls.Add(this.deleteExcelButton);
             this.Controls.Add(this.fileNameListBox);
             this.Controls.Add(this.addExcelButton);
@@ -82,6 +94,7 @@
         private System.Windows.Forms.Button addExcelButton;
         private System.Windows.Forms.ListBox fileNameListBox;
         private System.Windows.Forms.Button deleteExcelButton;
+        private System.Windows.Forms.Button mergeButton;
     }
 }
 

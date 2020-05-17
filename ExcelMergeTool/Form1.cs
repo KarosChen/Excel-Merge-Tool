@@ -55,5 +55,11 @@ namespace ExcelMergeTool
                 fileNameListBox.Items.Remove(fileName);
             }
         }
+
+        private void mergeButton_Click(object sender, EventArgs e)
+        {
+            _model.MergeAllFile();
+
+        }
     }
 }

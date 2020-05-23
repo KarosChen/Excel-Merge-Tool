@@ -100,19 +100,17 @@ namespace ExcelMergeTool
             }
         }
 
-        private void ExcelMergeForm_Load(object sender, EventArgs e)
+        private void selectAllSheetsButton_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void sourceExcelTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void selectedSheetsLabel_Click(object sender, EventArgs e)
-        {
-
+            foreach (string sheetName in _allSheetsList)
+            {
+                int index = selectedSheetsListBox.FindString(sheetName);
+                if (index == -1)
+                {
+                    selectedSheetsListBox.Items.Add(sheetName);
+                    _selectedSheetsList.Add(sheetName);
+                }
+            }
         }
     }
 }

@@ -99,5 +99,20 @@ namespace ExcelMergeTool
                 _selectedSheetsList.Remove(sheetName);
             }
         }
+
+        private void ExcelMergeForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void sourceExcelTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void selectedSheetsLabel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

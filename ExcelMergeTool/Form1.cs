@@ -65,6 +65,7 @@ namespace ExcelMergeTool
 
         private void mergeButton_Click(object sender, EventArgs e)
         {
+            mergeButton.Enabled = false;
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Filter = "Word Documents | *.doc";
             saveFileDialog1.Title = "選擇文件的存取位置";
@@ -74,6 +75,7 @@ namespace ExcelMergeTool
                 _savePath = saveFileDialog1.FileName;
                 _model.MergeSelectedSheets(_selectedSheetsList, _currentDirectory, _savePath);
             }
+            mergeButton.Enabled = true;
         }
 
         private void addSelectedSheetButton_Click(object sender, EventArgs e)

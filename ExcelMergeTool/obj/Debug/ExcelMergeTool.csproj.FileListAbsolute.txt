@@ -1,6 +1,4 @@
 D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\ExcelMergeTool.exe.config
-D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\ExcelMergeTool.exe
-D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\ExcelMergeTool.pdb
 D:\Program Dev\ExcelMergeTool\ExcelMergeTool\obj\Debug\ExcelMergeTool.csprojAssemblyReference.cache
 D:\Program Dev\ExcelMergeTool\ExcelMergeTool\obj\Debug\ExcelMergeTool.ExcelMergeForm.resources
 D:\Program Dev\ExcelMergeTool\ExcelMergeTool\obj\Debug\ExcelMergeTool.Properties.Resources.resources
@@ -8,13 +6,3 @@ D:\Program Dev\ExcelMergeTool\ExcelMergeTool\obj\Debug\ExcelMergeTool.csproj.Gen
 D:\Program Dev\ExcelMergeTool\ExcelMergeTool\obj\Debug\ExcelMergeTool.csproj.CoreCompileInputs.cache
 D:\Program Dev\ExcelMergeTool\ExcelMergeTool\obj\Debug\ExcelMergeTool.exe
 D:\Program Dev\ExcelMergeTool\ExcelMergeTool\obj\Debug\ExcelMergeTool.pdb
-D:\Program Dev\ExcelMergeTool\ExcelMergeTool\obj\Debug\ExcelMergeTool.csproj.CopyComplete
-D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Spire.Common.dll
-D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Spire.License.dll
-D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Spire.Pdf.dll
-D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Spire.XLS.dll
-D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Microsoft.mshtml.dll
-D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Spire.Common.xml
-D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Spire.License.xml
-D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Spire.Pdf.xml
-D:\Program Dev\ExcelMergeTool\ExcelMergeTool\bin\Debug\Spire.XLS.xml

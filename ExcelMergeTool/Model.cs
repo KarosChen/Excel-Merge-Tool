@@ -18,7 +18,7 @@ namespace ExcelMergeTool
     {
         //private List<string> fileNames = new List<string>();
         private string srcFilePath = "";
-        private List<Bitmap> addedImages = new List<Bitmap>();
+        private List<string> addedImagesPath = new List<string>();
         private List<string> allSheetsList = new List<string>();
         private Workbook srcBook;
 
@@ -33,23 +33,33 @@ namespace ExcelMergeTool
         {
             int sheetCount = selectedSheets.Count;
             string imagePath = "";
+            if (addedImagesPath.Count != 0)
+            {
+                addedImagesPath.Clear();
+            }
+
             for (int i = 0; i < sheetCount; i++)
             {
                 foreach (Worksheet sheet in srcBook.Worksheets)
                 {
                     if (sheet.Name == selectedSheets[i])
                     {
-                        imagePath = currentDirectory + i + ".jpeg";
+                        imagePath = currentDirectory + "\\" + i + ".jpeg";
+                        using (MemoryStream memStream = new MemoryStream())
+                        {
+                            sheet.SaveToStream(memStream, "\n");
+                            using (StreamWriter sw = new StreamWriter(imagePath))
+                            {
+                                memStream.CopyTo(sw.BaseStream);
+                                sw.Flush();
+                                sw.Close();
+                            }
+                        }
                         sheet.SaveToImage(imagePath);
                         break;
                     }
                 }
-                Bitmap srcImage = Image.FromFile(imagePath) as Bitmap;
-                int start_x = 0;
-                int start_y = srcImage.Height - Convert.ToInt32(srcImage.Height * 0.9);
-                System.Drawing.Rectangle cropArea = new System.Drawing.Rectangle(start_x, start_y, srcImage.Width, Convert.ToInt32(srcImage.Height * 0.9));
-                Bitmap desImage = srcImage.Clone(cropArea, srcImage.PixelFormat);
-                addedImages.Add(desImage);
+                addedImagesPath.Add(imagePath);
             }
             AddImageToWord(savePath);
         }
@@ -61,15 +71,33 @@ namespace ExcelMergeTool
             WordLib.Range docRange = newWordDoc.Content;
             object oCollapseEnd = WordLib.WdCollapseDirection.wdCollapseEnd;
 
-            foreach (Bitmap image in addedImages)
+            foreach (string imagePath in addedImagesPath)
             {
-                //Put image in Clipboard
-                Clipboard.SetImage(image);
-                docRange.Collapse(ref oCollapseEnd);
-                docRange.Paste();
+                using (Bitmap srcImage = Image.FromFile(imagePath) as Bitmap)
+                {
+                    int start_x = 0;
+                    int start_y = srcImage.Height - Convert.ToInt32(srcImage.Height * 0.9);
+                    System.Drawing.Rectangle cropArea = new System.Drawing.Rectangle(start_x, start_y, srcImage.Width, Convert.ToInt32(srcImage.Height * 0.9));
+                    Bitmap desImage = srcImage.Clone(cropArea, srcImage.PixelFormat);
+                    //Put image in Clipboard
+                    Clipboard.SetImage(desImage);
+                    docRange.Collapse(ref oCollapseEnd);
+                    docRange.Paste();
+
+                }
             }
             newWordDoc.SaveAs2(savePath);
             wordApp.Quit();
+
+            DeleteAllImageOnComputer();
+        }
+
+        public void DeleteAllImageOnComputer()
+        {
+            foreach (string imagePath in addedImagesPath)
+            {
+                File.Delete(imagePath);
+            }
         }
 
         public List<string> GetAllSheetsFromExcel()

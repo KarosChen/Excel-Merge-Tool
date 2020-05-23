@@ -49,9 +49,9 @@ namespace ExcelMergeTool
                     sourceExcelTextBox.Text = openFileDialog.FileName;
                     _model.openSourceFileName(openFileDialog.FileName);
                     _currentDirectory = Path.GetDirectoryName(openFileDialog.FileName);
+                    putAllSheetsInListBox();
                 }
             }
-            putAllSheetsInListBox();
         }
 
         private void putAllSheetsInListBox()

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using Microsoft.Office.Interop.Word;
 using Spire.Xls;
 using WordLib = Microsoft.Office.Interop.Word;
 
@@ -70,17 +71,24 @@ namespace ExcelMergeTool
             WordLib.Document newWordDoc = wordApp.Documents.Add();
             WordLib.Range docRange = newWordDoc.Content;
             object oCollapseEnd = WordLib.WdCollapseDirection.wdCollapseEnd;
+            newWordDoc.PageSetup.TopMargin = newWordDoc.Application.CentimetersToPoints((float)1.5);
+            newWordDoc.PageSetup.BottomMargin = newWordDoc.Application.CentimetersToPoints((float)1.5);
+            newWordDoc.PageSetup.LeftMargin = newWordDoc.Application.CentimetersToPoints((float)1.5);
+            newWordDoc.PageSetup.RightMargin = newWordDoc.Application.CentimetersToPoints((float)1.5);
 
             foreach (string imagePath in addedImagesPath)
             {
                 using (Bitmap srcImage = Image.FromFile(imagePath) as Bitmap)
                 {
-                    int start_x = 0;
-                    int start_y = srcImage.Height - Convert.ToInt32(srcImage.Height * 0.9);
-                    System.Drawing.Rectangle cropArea = new System.Drawing.Rectangle(start_x, start_y, srcImage.Width, Convert.ToInt32(srcImage.Height * 0.9));
+                    int start_x = 40;
+                    //int start_y = srcImage.Height - Convert.ToInt32(srcImage.Height * 0.9);
+                    //System.Drawing.Rectangle cropArea = new System.Drawing.Rectangle(start_x, start_y, srcImage.Width, Convert.ToInt32(srcImage.Height * 0.9));
+                    int start_y = 40;
+                    System.Drawing.Rectangle cropArea = new System.Drawing.Rectangle(start_x, start_y, srcImage.Width - 2 * start_x, srcImage.Height - 2 * start_y);
                     Bitmap desImage = srcImage.Clone(cropArea, srcImage.PixelFormat);
+                    Bitmap resizedImage = new Bitmap((Image)desImage, (int)(newWordDoc.PageSetup.PageWidth / 1.8), (int)(newWordDoc.PageSetup.PageHeight / 3.5));
                     //Put image in Clipboard
-                    Clipboard.SetImage(desImage);
+                    Clipboard.SetImage(resizedImage);
                     docRange.Collapse(ref oCollapseEnd);
                     docRange.Paste();
 

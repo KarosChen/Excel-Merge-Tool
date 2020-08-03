@@ -18,49 +18,106 @@ namespace ExcelMergeTool
     class Model
     {
         //private List<string> fileNames = new List<string>();
-        private string srcFilePath = "";
-        private List<string> addedImagesPath = new List<string>();
-        private List<string> allSheetsList = new List<string>();
-        private Workbook srcBook;
+        private string _srcFilePath = "";
+        private List<Workbook> _srcBooksList = new List<Workbook>();
+        private List<string> _addedImagesPath = new List<string>();
+        private List<string> _allSheetsList = new List<string>();
+        private List<Worksheet> _selectedSheetsList = new List<Worksheet>();
 
         public void openSourceFileName (string fileName)
         {
-            srcFilePath = fileName;
-            srcBook = new Workbook();
-            srcBook.LoadFromFile(srcFilePath);
+            _srcFilePath = fileName;
+            Workbook srcBook = new Workbook();
+            srcBook.LoadFromFile(_srcFilePath);
+            _srcBooksList.Add(srcBook);
         }
-        
-        public void MergeSelectedSheets (List<string> selectedSheets, string currentDirectory, string savePath)
-        {
-            int sheetCount = selectedSheets.Count;
-            string imagePath = "";
-            if (addedImagesPath.Count != 0)
-            {
-                addedImagesPath.Clear();
-            }
 
-            for (int i = 0; i < sheetCount; i++)
+        public List<string> GetAllSheetsFromExcel(int index)
+        {
+            if (_allSheetsList.Count != 0)
             {
-                foreach (Worksheet sheet in srcBook.Worksheets)
+                _allSheetsList.Clear();
+            }
+            Workbook srcBook = _srcBooksList[index];
+            foreach (Worksheet sheet in srcBook.Worksheets)
+            {
+                _allSheetsList.Add(sheet.Name);
+            }
+            return _allSheetsList;
+        }
+
+        public void addSelectedSheets(int bookIndex, List<string> sheetNames)
+        {
+            Workbook selectedBook = _srcBooksList[bookIndex];
+            foreach (string sheetName in sheetNames)
+            {
+                foreach (Worksheet sheet in selectedBook.Worksheets)
                 {
-                    if (sheet.Name == selectedSheets[i])
+                    if (sheet.Name == sheetName)
                     {
-                        imagePath = currentDirectory + "\\" + i + ".jpeg";
-                        using (MemoryStream memStream = new MemoryStream())
-                        {
-                            sheet.SaveToStream(memStream, "\n");
-                            using (StreamWriter sw = new StreamWriter(imagePath))
-                            {
-                                memStream.CopyTo(sw.BaseStream);
-                                sw.Flush();
-                                sw.Close();
-                            }
-                        }
-                        sheet.SaveToImage(imagePath);
+                        _selectedSheetsList.Add(sheet);
                         break;
                     }
                 }
-                addedImagesPath.Add(imagePath);
+            }
+        }
+
+        public void deleteSelectedSheet(int bookIndex, string sheetName)
+        {
+            Workbook selectedBook = _srcBooksList[bookIndex];
+            foreach (Worksheet sheet in selectedBook.Worksheets)
+            {
+                if (sheet.Name == sheetName)
+                {
+                    _selectedSheetsList.Remove(sheet);
+                    break;
+                }
+            }
+        }
+
+        public void MergeSelectedSheets (string currentDirectory, string savePath)
+        {
+            int sheetCount = _selectedSheetsList.Count;
+            string imagePath = "";
+            if (_addedImagesPath.Count != 0)
+            {
+                _addedImagesPath.Clear();
+            }
+            
+            for (int i = 0; i < sheetCount; i++)
+            {
+                Worksheet sheet = _selectedSheetsList[i];
+                imagePath = currentDirectory + "\\" + i + ".jpeg";
+                using (MemoryStream memStream = new MemoryStream())
+                {
+                    sheet.SaveToStream(memStream, "\n");
+                    using (StreamWriter sw = new StreamWriter(imagePath))
+                    {
+                        memStream.CopyTo(sw.BaseStream);
+                        sw.Flush();
+                        sw.Close();
+                    }
+                }
+                sheet.SaveToImage(imagePath);
+                _addedImagesPath.Add(imagePath);
+                /*
+                foreach (Worksheet sheet in _selectedSheetsList)
+                {
+                    imagePath = currentDirectory + "\\" + i + ".jpeg";
+                    using (MemoryStream memStream = new MemoryStream())
+                    {
+                        sheet.SaveToStream(memStream, "\n");
+                        using (StreamWriter sw = new StreamWriter(imagePath))
+                        {
+                            memStream.CopyTo(sw.BaseStream);
+                            sw.Flush();
+                            sw.Close();
+                        }
+                    }
+                    sheet.SaveToImage(imagePath);
+                    break;
+                }
+                _addedImagesPath.Add(imagePath);*/
             }
             AddImageToWord(savePath);
         }
@@ -76,7 +133,7 @@ namespace ExcelMergeTool
             newWordDoc.PageSetup.LeftMargin = newWordDoc.Application.CentimetersToPoints((float)1.5);
             newWordDoc.PageSetup.RightMargin = newWordDoc.Application.CentimetersToPoints((float)1.5);
 
-            foreach (string imagePath in addedImagesPath)
+            foreach (string imagePath in _addedImagesPath)
             {
                 using (Bitmap srcImage = Image.FromFile(imagePath) as Bitmap)
                 {
@@ -102,23 +159,11 @@ namespace ExcelMergeTool
 
         public void DeleteAllImageOnComputer()
         {
-            foreach (string imagePath in addedImagesPath)
+            foreach (string imagePath in _addedImagesPath)
             {
                 File.Delete(imagePath);
             }
         }
 
-        public List<string> GetAllSheetsFromExcel()
-        {
-            if(allSheetsList.Count != 0)
-            {
-                allSheetsList.Clear();
-            }
-            foreach(Worksheet sheet in srcBook.Worksheets)
-            {
-                allSheetsList.Add(sheet.Name);
-            }
-            return allSheetsList;
-        }
     }
 }

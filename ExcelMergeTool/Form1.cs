@@ -16,6 +16,8 @@ namespace ExcelMergeTool
     {
         private string _currentDirectory = "";
         private string _savePath = "";
+        bool _isExisted = false;
+        int _isShowingFile = -1;
         private Model _model;
         private List<string> _allSheetsList = new List<string>();
         private List<string> _selectedSheetsList = new List<string>();
@@ -38,28 +40,81 @@ namespace ExcelMergeTool
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (allSheetsListBox.Items.Count != 0)
+                    //check file is not existed
+                    string fileName = openFileDialog.FileName;
+                    foreach (string existedFile in addedExcelComboBox.Items)
                     {
-                        allSheetsListBox.Items.Clear();
-                        _allSheetsList.Clear();
-                        selectedSheetsListBox.Items.Clear();
-                        _selectedSheetsList.Clear();
+                        if(existedFile == fileName)
+                        {
+                            _isExisted = true;
+                            break;
+                        }
                     }
 
-                    sourceExcelTextBox.Text = openFileDialog.FileName;
-                    _model.openSourceFileName(openFileDialog.FileName);
-                    _currentDirectory = Path.GetDirectoryName(openFileDialog.FileName);
-                    putAllSheetsInListBox();
+                    if (!_isExisted)
+                    {
+                        _model.openSourceFileName(fileName);
+
+                        //When combox is added new item, it will execute addedExcelComboBox_SelectedIndexChanged function
+                        addedExcelComboBox.Items.Add(fileName);
+                        addedExcelComboBox.Text = fileName;
+                        _currentDirectory = Path.GetDirectoryName(fileName);
+
+                        //add class node in TreeView
+                        TreeNode fileNode = new TreeNode(fileName);
+                        fileNode.Name = fileName;
+                        fileNode.ForeColor = Color.Red;
+                        selectedSheetsTreeView.Nodes.Add(fileNode);
+                    }
                 }
             }
         }
 
-        private void putAllSheetsInListBox()
+        private void addSelectedSheetButton_Click(object sender, EventArgs e)
         {
-            _allSheetsList = _model.GetAllSheetsFromExcel();
-            foreach (string sheet in _allSheetsList)
+            List<string> selectedSheetNames = allSheetsListBox.SelectedItems.Cast<string>().ToList();
+            List<string> notDuplicatedSheetNames = new List<string>();
+            TreeNode[] findedFileNodes = selectedSheetsTreeView.Nodes.Find(addedExcelComboBox.Text, false);
+            foreach (string sheetName in selectedSheetNames)
             {
-                allSheetsListBox.Items.Add(sheet);
+                TreeNode[] findedSheetNodes = findedFileNodes[0].Nodes.Find(sheetName, false);
+
+                if (findedSheetNodes.Length == 0)
+                {
+                    TreeNode sheetNode = new TreeNode(sheetName);
+                    sheetNode.Name = sheetName;
+                    findedFileNodes[0].Nodes.Add(sheetNode);
+                    notDuplicatedSheetNames.Add(sheetName);
+                }
+            }
+            _model.addSelectedSheets(_isShowingFile, notDuplicatedSheetNames);
+        }
+
+        private void addAllSheetsButton_Click(object sender, EventArgs e)
+        {
+            List<string> notDuplicatedSheetNames = new List<string>();
+            TreeNode[] findedFileNodes = selectedSheetsTreeView.Nodes.Find(addedExcelComboBox.Text, false);
+            foreach (string sheetName in _allSheetsList)
+            {
+                TreeNode[] findedSheetNodes = findedFileNodes[0].Nodes.Find(sheetName, false);
+
+                if (findedSheetNodes.Length == 0)
+                {
+                    TreeNode sheetNode = new TreeNode(sheetName);
+                    sheetNode.Name = sheetName;
+                    findedFileNodes[0].Nodes.Add(sheetNode);
+                    notDuplicatedSheetNames.Add(sheetName);
+                }
+            }
+            _model.addSelectedSheets(_isShowingFile, notDuplicatedSheetNames);
+        }
+
+        private void deleteSelectedSheetButton_Click(object sender, EventArgs e)
+        {
+            if (selectedSheetsTreeView.SelectedNode.Level == 1)
+            {
+                _model.deleteSelectedSheet(_isShowingFile, selectedSheetsTreeView.SelectedNode.Name);
+                selectedSheetsTreeView.SelectedNode.Remove();
             }
         }
 
@@ -73,45 +128,32 @@ namespace ExcelMergeTool
             if (saveFileDialog1.FileName != "")
             {
                 _savePath = saveFileDialog1.FileName;
-                _model.MergeSelectedSheets(_selectedSheetsList, _currentDirectory, _savePath);
+                _model.MergeSelectedSheets(_currentDirectory, _savePath);
             }
             mergeButton.Enabled = true;
         }
 
-        private void addSelectedSheetButton_Click(object sender, EventArgs e)
+        private void addedExcelComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<string> selectedSheetNames = allSheetsListBox.SelectedItems.Cast<string>().ToList();
-            foreach (string sheetName in selectedSheetNames)
+            if (allSheetsListBox.Items.Count != 0)
             {
-                int index = selectedSheetsListBox.FindString(sheetName);
-                if (index == -1)
-                {
-                    selectedSheetsListBox.Items.Add(sheetName);
-                    _selectedSheetsList.Add(sheetName);
-                }
+                allSheetsListBox.Items.Clear();
+                _allSheetsList.Clear();
+            }
+
+            if (addedExcelComboBox.SelectedIndex > -1)
+            {
+                putAllSheetsInListBox(addedExcelComboBox.SelectedIndex);
+                _isShowingFile = addedExcelComboBox.SelectedIndex;
             }
         }
 
-        private void deleteSelectedSheetNutton_Click(object sender, EventArgs e)
+        private void putAllSheetsInListBox(int index)
         {
-            List<string> selectedSheetNames = selectedSheetsListBox.SelectedItems.Cast<string>().ToList();
-            foreach (string sheetName in selectedSheetNames)
+            _allSheetsList = _model.GetAllSheetsFromExcel(index);
+            foreach (string sheet in _allSheetsList)
             {
-                selectedSheetsListBox.Items.Remove(sheetName);
-                _selectedSheetsList.Remove(sheetName);
-            }
-        }
-
-        private void selectAllSheetsButton_Click(object sender, EventArgs e)
-        {
-            foreach (string sheetName in _allSheetsList)
-            {
-                int index = selectedSheetsListBox.FindString(sheetName);
-                if (index == -1)
-                {
-                    selectedSheetsListBox.Items.Add(sheetName);
-                    _selectedSheetsList.Add(sheetName);
-                }
+                allSheetsListBox.Items.Add(sheet);
             }
         }
     }

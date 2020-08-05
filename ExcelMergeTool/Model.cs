@@ -22,7 +22,7 @@ namespace ExcelMergeTool
         private List<Workbook> _srcBooksList = new List<Workbook>();
         private List<string> _addedImagesPath = new List<string>();
         private List<string> _allSheetsList = new List<string>();
-        private List<Worksheet> _selectedSheetsList = new List<Worksheet>();
+        private Dictionary<Tuple<string, string>, Worksheet> _selectedSheetsDict = new Dictionary<Tuple<string, string>, Worksheet>();
 
         public void openSourceFileName (string fileName)
         {
@@ -55,42 +55,41 @@ namespace ExcelMergeTool
                 {
                     if (sheet.Name == sheetName)
                     {
-                        _selectedSheetsList.Add(sheet);
+                        Tuple<string, string> selectedKey = new Tuple<string, string>(selectedBook.FileName, sheet.Name);
+                        Worksheet selectedValue = sheet;
+                        _selectedSheetsDict.Add(selectedKey, selectedValue);
                         break;
                     }
                 }
             }
         }
 
-        public void deleteSelectedSheet(int bookIndex, string sheetName)
+        public void deleteSelectedSheet(string bookName, string sheetName)
         {
-            Workbook selectedBook = _srcBooksList[bookIndex];
-            foreach (Worksheet sheet in selectedBook.Worksheets)
+            Tuple<string, string> selectedSheet = new Tuple<string, string>(bookName, sheetName);
+            if (_selectedSheetsDict.ContainsKey(selectedSheet))
             {
-                if (sheet.Name == sheetName)
-                {
-                    _selectedSheetsList.Remove(sheet);
-                    break;
-                }
+                _selectedSheetsDict.Remove(selectedSheet);
             }
         }
 
         public void MergeSelectedSheets (string currentDirectory, string savePath)
         {
-            int sheetCount = _selectedSheetsList.Count;
             string imagePath = "";
             if (_addedImagesPath.Count != 0)
             {
                 _addedImagesPath.Clear();
             }
-            
-            for (int i = 0; i < sheetCount; i++)
+
+            int i = 0;
+
+            foreach (KeyValuePair<Tuple<string, string>, Worksheet> sheet in _selectedSheetsDict)
             {
-                Worksheet sheet = _selectedSheetsList[i];
-                imagePath = currentDirectory + "\\" + i + ".jpeg";
+                i++;
+                imagePath = currentDirectory + "\\"  + i + ".jpeg";
                 using (MemoryStream memStream = new MemoryStream())
                 {
-                    sheet.SaveToStream(memStream, "\n");
+                    sheet.Value.SaveToStream(memStream, "\n");
                     using (StreamWriter sw = new StreamWriter(imagePath))
                     {
                         memStream.CopyTo(sw.BaseStream);
@@ -98,27 +97,10 @@ namespace ExcelMergeTool
                         sw.Close();
                     }
                 }
-                sheet.SaveToImage(imagePath);
+                sheet.Value.SaveToImage(imagePath);
                 _addedImagesPath.Add(imagePath);
-                /*
-                foreach (Worksheet sheet in _selectedSheetsList)
-                {
-                    imagePath = currentDirectory + "\\" + i + ".jpeg";
-                    using (MemoryStream memStream = new MemoryStream())
-                    {
-                        sheet.SaveToStream(memStream, "\n");
-                        using (StreamWriter sw = new StreamWriter(imagePath))
-                        {
-                            memStream.CopyTo(sw.BaseStream);
-                            sw.Flush();
-                            sw.Close();
-                        }
-                    }
-                    sheet.SaveToImage(imagePath);
-                    break;
-                }
-                _addedImagesPath.Add(imagePath);*/
             }
+
             AddImageToWord(savePath);
         }
 

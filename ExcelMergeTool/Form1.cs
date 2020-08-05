@@ -113,7 +113,7 @@ namespace ExcelMergeTool
         {
             if (selectedSheetsTreeView.SelectedNode.Level == 1)
             {
-                _model.deleteSelectedSheet(_isShowingFile, selectedSheetsTreeView.SelectedNode.Name);
+                _model.deleteSelectedSheet(selectedSheetsTreeView.SelectedNode.Parent.Name, selectedSheetsTreeView.SelectedNode.Name);
                 selectedSheetsTreeView.SelectedNode.Remove();
             }
         }

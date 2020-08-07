@@ -24,7 +24,7 @@ namespace ExcelMergeTool
         private List<string> _allSheetsList = new List<string>();
         private Dictionary<Tuple<string, string>, Worksheet> _selectedSheetsDict = new Dictionary<Tuple<string, string>, Worksheet>();
 
-        public void openSourceFileName (string fileName)
+        public void OpenSourceFileName (string fileName)
         {
             _srcFilePath = fileName;
             Workbook srcBook = new Workbook();
@@ -46,7 +46,7 @@ namespace ExcelMergeTool
             return _allSheetsList;
         }
 
-        public void addSelectedSheets(int bookIndex, List<string> sheetNames)
+        public void AddSelectedSheets(int bookIndex, List<string> sheetNames)
         {
             Workbook selectedBook = _srcBooksList[bookIndex];
             foreach (string sheetName in sheetNames)
@@ -64,12 +64,29 @@ namespace ExcelMergeTool
             }
         }
 
-        public void deleteSelectedSheet(string bookName, string sheetName)
+        public void DeleteSelectedSheet(string bookName, string sheetName)
         {
             Tuple<string, string> selectedSheet = new Tuple<string, string>(bookName, sheetName);
             if (_selectedSheetsDict.ContainsKey(selectedSheet))
             {
                 _selectedSheetsDict.Remove(selectedSheet);
+            }
+        }
+
+        public void DeleteAllSelectedSheet()
+        {
+            _selectedSheetsDict.Clear();
+        }
+
+        public bool CheckSelectedDictIsEmpty()
+        {
+            if (_selectedSheetsDict.Count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 

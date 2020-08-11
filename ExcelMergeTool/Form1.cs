@@ -19,7 +19,8 @@ namespace ExcelMergeTool
         bool _isExisted = false;
         int _isShowingFile = -1;
         private Model _model;
-        private List<string> _allSheetsList = new List<string>();
+        private List<string> _allSheetsNameList;
+        private ImageList _allSheetsImageList;
         public ExcelMergeForm()
         {
             InitializeComponent();
@@ -55,20 +56,30 @@ namespace ExcelMergeTool
                     {
                         try
                         {
-                            _model.OpenSourceFileName(fileName);
-                            //When combox is added new item, it will execute addedExcelComboBox_SelectedIndexChanged function
-                            addedExcelComboBox.Items.Add(fileName);
-                            addedExcelComboBox.Text = fileName;
-                            _currentDirectory = Path.GetDirectoryName(fileName);
+                            _model.OpenSourceFileName(fileName);                      
+                            try
+                            {
+                                //When combox is added new item, it will execute addedExcelComboBox_SelectedIndexChanged function
+                                addedExcelComboBox.Items.Add(fileName);
+                                addedExcelComboBox.Text = fileName;
+                                _currentDirectory = Path.GetDirectoryName(fileName);
 
-                            //add class node in TreeView
-                            TreeNode fileNode = new TreeNode(fileName);
-                            fileNode.Name = fileName;
-                            fileNode.ForeColor = Color.Red;
-                            selectedSheetsTreeView.Nodes.Add(fileNode);
-                            setButtonEnableProperty();
+                                //add class node in TreeView
+                                TreeNode fileNode = new TreeNode(fileName);
+                                fileNode.Name = fileName;
+                                fileNode.ForeColor = Color.Red;
+                                selectedSheetsTreeView.Nodes.Add(fileNode);
+                                setButtonEnableProperty();
+                            }
+                            catch
+                            {
+                                addedExcelComboBox.Items.Remove(fileName);
+                                addedExcelComboBox.Text = "";
+                                _model.RemoveSourceFileName(fileName);
+                                MessageBox.Show("請確認加入的Excel中每一個表單都有樣式圖!");
+                            }
                         }
-                        catch (Exception)
+                        catch
                         {
                             MessageBox.Show("請確認要加入的檔案是否關閉了!");
                         }
@@ -79,7 +90,13 @@ namespace ExcelMergeTool
 
         private void addSelectedSheetButton_Click(object sender, EventArgs e)
         {
-            List<string> selectedSheetNames = allSheetsListBox.SelectedItems.Cast<string>().ToList();
+            List<string> selectedSheetNames = new List<string>();
+            
+            for (int i = 0; i < allSheetsListView.SelectedItems.Count; i++)
+            {
+                selectedSheetNames.Add(allSheetsListView.SelectedItems[i].Text);
+            }
+
             List<string> notDuplicatedSheetNames = new List<string>();
             TreeNode[] findedFileNodes = selectedSheetsTreeView.Nodes.Find(addedExcelComboBox.Text, false);
             foreach (string sheetName in selectedSheetNames)
@@ -102,7 +119,7 @@ namespace ExcelMergeTool
         {
             List<string> notDuplicatedSheetNames = new List<string>();
             TreeNode[] findedFileNodes = selectedSheetsTreeView.Nodes.Find(addedExcelComboBox.Text, false);
-            foreach (string sheetName in _allSheetsList)
+            foreach (string sheetName in _allSheetsNameList)
             {
                 TreeNode[] findedSheetNodes = findedFileNodes[0].Nodes.Find(sheetName, false);
 
@@ -120,12 +137,19 @@ namespace ExcelMergeTool
 
         private void deleteSelectedSheetButton_Click(object sender, EventArgs e)
         {
-            if (selectedSheetsTreeView.SelectedNode.Level == 1)
+            try
             {
-                _model.DeleteSelectedSheet(selectedSheetsTreeView.SelectedNode.Parent.Name, selectedSheetsTreeView.SelectedNode.Name);
-                selectedSheetsTreeView.SelectedNode.Remove();
+                if (selectedSheetsTreeView.SelectedNode.Level == 1)
+                {
+                    _model.DeleteSelectedSheet(selectedSheetsTreeView.SelectedNode.Parent.Name, selectedSheetsTreeView.SelectedNode.Name);
+                    selectedSheetsTreeView.SelectedNode.Remove();
+                }
+                setButtonEnableProperty();
             }
-            setButtonEnableProperty();
+            catch
+            {
+                MessageBox.Show("請先選擇要刪除的項目!");
+            }
         }
 
         private void deleteAllSelectedSheetsButton_Click(object sender, EventArgs e)
@@ -156,10 +180,12 @@ namespace ExcelMergeTool
 
         private void addedExcelComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (allSheetsListBox.Items.Count != 0)
+
+            if (allSheetsListView.Items.Count != 0)
             {
-                allSheetsListBox.Items.Clear();
-                _allSheetsList.Clear();
+                allSheetsListView.Items.Clear();
+                _allSheetsNameList.Clear();
+                _allSheetsImageList.Images.Clear();
             }
 
             if (addedExcelComboBox.SelectedIndex > -1)
@@ -171,11 +197,17 @@ namespace ExcelMergeTool
 
         private void putAllSheetsInListBox(int index)
         {
-            _allSheetsList = _model.GetAllSheetsFromExcel(index);
-            foreach (string sheet in _allSheetsList)
+
+            Tuple<List<string>, ImageList> _allSheetsTuple = _model.GetAllSheetsFromExcel(index);
+            _allSheetsNameList = _allSheetsTuple.Item1;
+            _allSheetsImageList = _allSheetsTuple.Item2;
+            allSheetsListView.LargeImageList = _allSheetsImageList;
+            allSheetsListView.BeginUpdate();
+            for (int i = 0; i < _allSheetsNameList.Count; i++)
             {
-                allSheetsListBox.Items.Add(sheet);
+                allSheetsListView.Items.Add(_allSheetsNameList[i], i);
             }
+            allSheetsListView.EndUpdate();
         }
 
         private void setButtonEnableProperty()
@@ -202,6 +234,16 @@ namespace ExcelMergeTool
                 deleteSelectedSheetButton.Enabled = true;
                 deleteAllSelectedSheetsButton.Enabled = true;
                 mergeButton.Enabled = true;
+            }
+        }
+
+        private void allSheetsListView_DrawItem(object sender, DrawListViewItemEventArgs item)
+        {
+            item.DrawDefault = true;
+            using (SolidBrush itemBrush = new SolidBrush(Color.WhiteSmoke))
+            {
+                item.Graphics.DrawRectangle(Pens.Red, item.Bounds);
+                item.Graphics.FillRectangle(itemBrush, item.Bounds);
             }
         }
     }

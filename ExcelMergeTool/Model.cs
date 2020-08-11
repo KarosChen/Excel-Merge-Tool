@@ -21,7 +21,8 @@ namespace ExcelMergeTool
         private string _srcFilePath = "";
         private List<Workbook> _srcBooksList = new List<Workbook>();
         private List<string> _addedImagesPath = new List<string>();
-        private List<string> _allSheetsList = new List<string>();
+        private List<string> _allSheetsNameList = new List<string>();
+        private ImageList _allSheetsImageList = new ImageList();
         private Dictionary<Tuple<string, string>, Worksheet> _selectedSheetsDict = new Dictionary<Tuple<string, string>, Worksheet>();
 
         public void OpenSourceFileName (string fileName)
@@ -32,18 +33,26 @@ namespace ExcelMergeTool
             _srcBooksList.Add(srcBook);
         }
 
-        public List<string> GetAllSheetsFromExcel(int index)
+        public void RemoveSourceFileName (string fileName)
         {
-            if (_allSheetsList.Count != 0)
+            _srcBooksList.Remove(_srcBooksList.Find(x => x.FileName == fileName));
+        }
+
+        public Tuple<List<string>, ImageList> GetAllSheetsFromExcel(int index)
+        {
+            if (_allSheetsNameList.Count != 0)
             {
-                _allSheetsList.Clear();
+                _allSheetsNameList.Clear();
+                _allSheetsImageList.Images.Clear();
             }
+            _allSheetsImageList.ImageSize = new Size(125, 125);
             Workbook srcBook = _srcBooksList[index];
             foreach (Worksheet sheet in srcBook.Worksheets)
             {
-                _allSheetsList.Add(sheet.Name);
+                _allSheetsNameList.Add(sheet.Name);    
+                _allSheetsImageList.Images.Add(sheet.Pictures[0].Picture);
             }
-            return _allSheetsList;
+            return new Tuple<List<string>, ImageList>(_allSheetsNameList, _allSheetsImageList);
         }
 
         public void AddSelectedSheets(int bookIndex, List<string> sheetNames)

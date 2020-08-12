@@ -16,11 +16,12 @@ namespace ExcelMergeTool
     {
         private string _currentDirectory = "";
         private string _savePath = "";
-        bool _isExisted = false;
-        int _isShowingFile = -1;
         private Model _model;
         private List<string> _allSheetsNameList;
         private ImageList _allSheetsImageList;
+        int _isShowingFile = -1;
+        private ListViewItem clickedItem;
+
         public ExcelMergeForm()
         {
             InitializeComponent();
@@ -31,6 +32,7 @@ namespace ExcelMergeTool
 
         private void addExcelButton_Click(object sender, EventArgs e)
         {
+            bool _isExisted = false;
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = _currentDirectory;
@@ -86,6 +88,22 @@ namespace ExcelMergeTool
                     }
                 }
             }
+        }
+
+        private void deleteExcelButton_Click(object sender, EventArgs e)
+        {
+            string deletedFileName = addedExcelComboBox.SelectedItem.ToString();
+            _model.DeleteAllSheetsFromExcelName(deletedFileName);
+            _model.RemoveSourceFileName(deletedFileName);
+            addedExcelComboBox.Items.Remove(addedExcelComboBox.SelectedItem);
+            addedExcelComboBox.Text = "";
+            TreeNode[] fileNodes = selectedSheetsTreeView.Nodes.Find(deletedFileName, false);
+            selectedSheetsTreeView.Nodes.Remove(fileNodes[0]);
+            _isShowingFile = -1;
+            allSheetsListView.Items.Clear();
+            _allSheetsNameList.Clear();
+            _allSheetsImageList.Images.Clear();
+            setButtonEnableProperty();
         }
 
         private void addSelectedSheetButton_Click(object sender, EventArgs e)
@@ -192,6 +210,7 @@ namespace ExcelMergeTool
             {
                 putAllSheetsInListBox(addedExcelComboBox.SelectedIndex);
                 _isShowingFile = addedExcelComboBox.SelectedIndex;
+                setButtonEnableProperty();
             }
         }
 
@@ -210,17 +229,29 @@ namespace ExcelMergeTool
             allSheetsListView.EndUpdate();
         }
 
+        private void allSheetsListView_DrawItem(object sender, DrawListViewItemEventArgs item)
+        {
+            item.DrawDefault = true;
+            using (SolidBrush itemBrush = new SolidBrush(Color.WhiteSmoke))
+            {
+                item.Graphics.DrawRectangle(Pens.Red, item.Bounds);
+                item.Graphics.FillRectangle(itemBrush, item.Bounds);
+            }
+        }
+
         private void setButtonEnableProperty()
         {
             if (_isShowingFile > -1)
             {
                 addSelectedSheetButton.Enabled = true;
                 addAllSheetsButton.Enabled = true;
+                deleteExcelButton.Enabled = true;
             }
             else
             {
                 addSelectedSheetButton.Enabled = false;
                 addAllSheetsButton.Enabled = false;
+                deleteExcelButton.Enabled = false;
             }
 
             if (_model.CheckSelectedDictIsEmpty())
@@ -234,16 +265,6 @@ namespace ExcelMergeTool
                 deleteSelectedSheetButton.Enabled = true;
                 deleteAllSelectedSheetsButton.Enabled = true;
                 mergeButton.Enabled = true;
-            }
-        }
-
-        private void allSheetsListView_DrawItem(object sender, DrawListViewItemEventArgs item)
-        {
-            item.DrawDefault = true;
-            using (SolidBrush itemBrush = new SolidBrush(Color.WhiteSmoke))
-            {
-                item.Graphics.DrawRectangle(Pens.Red, item.Bounds);
-                item.Graphics.FillRectangle(itemBrush, item.Bounds);
             }
         }
     }

@@ -11,7 +11,7 @@ using System.Windows.Forms.VisualStyles;
 using Microsoft.Office.Interop.Word;
 using Spire.Xls;
 using WordLib = Microsoft.Office.Interop.Word;
-
+using ExcelLib = Microsoft.Office.Interop.Excel;
 
 namespace ExcelMergeTool
 {
@@ -53,6 +53,23 @@ namespace ExcelMergeTool
                 _allSheetsImageList.Images.Add(sheet.Pictures[0].Picture);
             }
             return new Tuple<List<string>, ImageList>(_allSheetsNameList, _allSheetsImageList);
+        }
+
+        public void DeleteAllSheetsFromExcelName(string fileName)
+        {
+            if (_allSheetsNameList.Count != 0)
+            {
+                _allSheetsNameList.Clear();
+                _allSheetsImageList.Images.Clear();
+            }
+
+            foreach (KeyValuePair<Tuple<string, string>, Worksheet> sheet in _selectedSheetsDict.ToArray())
+            {
+                if (sheet.Key.Item1 == fileName)
+                {
+                    _selectedSheetsDict.Remove(sheet.Key);
+                }
+            }
         }
 
         public void AddSelectedSheets(int bookIndex, List<string> sheetNames)

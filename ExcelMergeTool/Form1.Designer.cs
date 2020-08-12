@@ -32,8 +32,13 @@
             this.addSelectedSheetButton = new System.Windows.Forms.Button();
             this.deleteSelectedSheetButton = new System.Windows.Forms.Button();
             this.buttonTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.addAllSheetsButton = new System.Windows.Forms.Button();
+            this.fileButtonGroupBox = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.deleteExcelButton = new System.Windows.Forms.Button();
+            this.sheetButtonGroupBox = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.mergeButton = new System.Windows.Forms.Button();
+            this.addAllSheetsButton = new System.Windows.Forms.Button();
             this.deleteAllSelectedSheetsButton = new System.Windows.Forms.Button();
             this.fileTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.allSheetsLabel = new System.Windows.Forms.Label();
@@ -46,6 +51,10 @@
             this.sheetTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.outerTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.buttonTableLayoutPanel.SuspendLayout();
+            this.fileButtonGroupBox.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.sheetButtonGroupBox.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.fileTableLayoutPanel.SuspendLayout();
             this.showTableLayoutPanel.SuspendLayout();
             this.sheetTableLayoutPanel.SuspendLayout();
@@ -55,11 +64,10 @@
             // openExcelButton
             // 
             this.openExcelButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.openExcelButton.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.openExcelButton.Location = new System.Drawing.Point(5, 5);
-            this.openExcelButton.Margin = new System.Windows.Forms.Padding(5);
+            this.openExcelButton.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.openExcelButton.Location = new System.Drawing.Point(3, 3);
             this.openExcelButton.Name = "openExcelButton";
-            this.openExcelButton.Size = new System.Drawing.Size(130, 128);
+            this.openExcelButton.Size = new System.Drawing.Size(122, 56);
             this.openExcelButton.TabIndex = 0;
             this.openExcelButton.Text = "加入Excel";
             this.openExcelButton.UseVisualStyleBackColor = true;
@@ -68,11 +76,10 @@
             // addSelectedSheetButton
             // 
             this.addSelectedSheetButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.addSelectedSheetButton.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.addSelectedSheetButton.Location = new System.Drawing.Point(5, 225);
-            this.addSelectedSheetButton.Margin = new System.Windows.Forms.Padding(5);
+            this.addSelectedSheetButton.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.addSelectedSheetButton.Location = new System.Drawing.Point(3, 3);
             this.addSelectedSheetButton.Name = "addSelectedSheetButton";
-            this.addSelectedSheetButton.Size = new System.Drawing.Size(130, 72);
+            this.addSelectedSheetButton.Size = new System.Drawing.Size(122, 63);
             this.addSelectedSheetButton.TabIndex = 6;
             this.addSelectedSheetButton.Text = "加入選擇的表單";
             this.addSelectedSheetButton.UseVisualStyleBackColor = true;
@@ -81,11 +88,10 @@
             // deleteSelectedSheetButton
             // 
             this.deleteSelectedSheetButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.deleteSelectedSheetButton.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.deleteSelectedSheetButton.Location = new System.Drawing.Point(5, 389);
-            this.deleteSelectedSheetButton.Margin = new System.Windows.Forms.Padding(5);
+            this.deleteSelectedSheetButton.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.deleteSelectedSheetButton.Location = new System.Drawing.Point(3, 141);
             this.deleteSelectedSheetButton.Name = "deleteSelectedSheetButton";
-            this.deleteSelectedSheetButton.Size = new System.Drawing.Size(130, 72);
+            this.deleteSelectedSheetButton.Size = new System.Drawing.Size(122, 63);
             this.deleteSelectedSheetButton.TabIndex = 7;
             this.deleteSelectedSheetButton.Text = "刪除選擇的表單";
             this.deleteSelectedSheetButton.UseVisualStyleBackColor = true;
@@ -95,60 +101,125 @@
             // 
             this.buttonTableLayoutPanel.ColumnCount = 1;
             this.buttonTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.buttonTableLayoutPanel.Controls.Add(this.openExcelButton, 0, 0);
-            this.buttonTableLayoutPanel.Controls.Add(this.addAllSheetsButton, 0, 1);
-            this.buttonTableLayoutPanel.Controls.Add(this.addSelectedSheetButton, 0, 2);
-            this.buttonTableLayoutPanel.Controls.Add(this.mergeButton, 0, 5);
-            this.buttonTableLayoutPanel.Controls.Add(this.deleteSelectedSheetButton, 0, 4);
-            this.buttonTableLayoutPanel.Controls.Add(this.deleteAllSelectedSheetsButton, 0, 3);
+            this.buttonTableLayoutPanel.Controls.Add(this.fileButtonGroupBox, 0, 0);
+            this.buttonTableLayoutPanel.Controls.Add(this.sheetButtonGroupBox, 0, 1);
             this.buttonTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonTableLayoutPanel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.buttonTableLayoutPanel.Location = new System.Drawing.Point(840, 4);
             this.buttonTableLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
             this.buttonTableLayoutPanel.Name = "buttonTableLayoutPanel";
-            this.buttonTableLayoutPanel.RowCount = 6;
-            this.buttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.buttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.buttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.buttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.buttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.buttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.buttonTableLayoutPanel.RowCount = 2;
+            this.buttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.buttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
             this.buttonTableLayoutPanel.Size = new System.Drawing.Size(140, 553);
             this.buttonTableLayoutPanel.TabIndex = 8;
             // 
-            // addAllSheetsButton
+            // fileButtonGroupBox
             // 
-            this.addAllSheetsButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.addAllSheetsButton.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.addAllSheetsButton.Location = new System.Drawing.Point(5, 143);
-            this.addAllSheetsButton.Margin = new System.Windows.Forms.Padding(5);
-            this.addAllSheetsButton.Name = "addAllSheetsButton";
-            this.addAllSheetsButton.Size = new System.Drawing.Size(130, 72);
-            this.addAllSheetsButton.TabIndex = 8;
-            this.addAllSheetsButton.Text = "加入所有的表單";
-            this.addAllSheetsButton.UseVisualStyleBackColor = true;
-            this.addAllSheetsButton.Click += new System.EventHandler(this.addAllSheetsButton_Click);
+            this.fileButtonGroupBox.Controls.Add(this.tableLayoutPanel2);
+            this.fileButtonGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fileButtonGroupBox.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.fileButtonGroupBox.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.fileButtonGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.fileButtonGroupBox.Name = "fileButtonGroupBox";
+            this.fileButtonGroupBox.Size = new System.Drawing.Size(134, 159);
+            this.fileButtonGroupBox.TabIndex = 10;
+            this.fileButtonGroupBox.TabStop = false;
+            this.fileButtonGroupBox.Text = "檔案控制";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.openExcelButton, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.deleteExcelButton, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 31);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(128, 125);
+            this.tableLayoutPanel2.TabIndex = 11;
+            // 
+            // deleteExcelButton
+            // 
+            this.deleteExcelButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.deleteExcelButton.Location = new System.Drawing.Point(3, 65);
+            this.deleteExcelButton.Name = "deleteExcelButton";
+            this.deleteExcelButton.Size = new System.Drawing.Size(122, 57);
+            this.deleteExcelButton.TabIndex = 9;
+            this.deleteExcelButton.Text = "刪除Excel";
+            this.deleteExcelButton.UseVisualStyleBackColor = true;
+            this.deleteExcelButton.Click += new System.EventHandler(this.deleteExcelButton_Click);
+            // 
+            // sheetButtonGroupBox
+            // 
+            this.sheetButtonGroupBox.Controls.Add(this.tableLayoutPanel1);
+            this.sheetButtonGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sheetButtonGroupBox.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.sheetButtonGroupBox.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.sheetButtonGroupBox.Location = new System.Drawing.Point(3, 168);
+            this.sheetButtonGroupBox.Name = "sheetButtonGroupBox";
+            this.sheetButtonGroupBox.Size = new System.Drawing.Size(134, 382);
+            this.sheetButtonGroupBox.TabIndex = 11;
+            this.sheetButtonGroupBox.TabStop = false;
+            this.sheetButtonGroupBox.Text = "表單控制";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.mergeButton, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.addSelectedSheetButton, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.deleteAllSelectedSheetsButton, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.deleteSelectedSheetButton, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.addAllSheetsButton, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 31);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(128, 348);
+            this.tableLayoutPanel1.TabIndex = 10;
             // 
             // mergeButton
             // 
             this.mergeButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mergeButton.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.mergeButton.Location = new System.Drawing.Point(5, 471);
-            this.mergeButton.Margin = new System.Windows.Forms.Padding(5);
+            this.mergeButton.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.mergeButton.Location = new System.Drawing.Point(3, 279);
             this.mergeButton.Name = "mergeButton";
-            this.mergeButton.Size = new System.Drawing.Size(130, 77);
+            this.mergeButton.Size = new System.Drawing.Size(122, 66);
             this.mergeButton.TabIndex = 3;
             this.mergeButton.Text = "合併";
             this.mergeButton.UseVisualStyleBackColor = true;
             this.mergeButton.Click += new System.EventHandler(this.mergeButton_Click);
             // 
+            // addAllSheetsButton
+            // 
+            this.addAllSheetsButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.addAllSheetsButton.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.addAllSheetsButton.Location = new System.Drawing.Point(3, 72);
+            this.addAllSheetsButton.Name = "addAllSheetsButton";
+            this.addAllSheetsButton.Size = new System.Drawing.Size(122, 63);
+            this.addAllSheetsButton.TabIndex = 8;
+            this.addAllSheetsButton.Text = "加入所有的表單";
+            this.addAllSheetsButton.UseVisualStyleBackColor = true;
+            this.addAllSheetsButton.Click += new System.EventHandler(this.addAllSheetsButton_Click);
+            // 
             // deleteAllSelectedSheetsButton
             // 
             this.deleteAllSelectedSheetsButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.deleteAllSelectedSheetsButton.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.deleteAllSelectedSheetsButton.Location = new System.Drawing.Point(5, 307);
-            this.deleteAllSelectedSheetsButton.Margin = new System.Windows.Forms.Padding(5);
+            this.deleteAllSelectedSheetsButton.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.deleteAllSelectedSheetsButton.Location = new System.Drawing.Point(3, 210);
             this.deleteAllSelectedSheetsButton.Name = "deleteAllSelectedSheetsButton";
-            this.deleteAllSelectedSheetsButton.Size = new System.Drawing.Size(130, 72);
+            this.deleteAllSelectedSheetsButton.Size = new System.Drawing.Size(122, 63);
             this.deleteAllSelectedSheetsButton.TabIndex = 9;
             this.deleteAllSelectedSheetsButton.Text = "刪除所有的表單";
             this.deleteAllSelectedSheetsButton.UseVisualStyleBackColor = true;
@@ -283,8 +354,8 @@
             this.outerTableLayoutPanel.ColumnCount = 2;
             this.outerTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.outerTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.outerTableLayoutPanel.Controls.Add(this.buttonTableLayoutPanel, 1, 0);
             this.outerTableLayoutPanel.Controls.Add(this.showTableLayoutPanel, 0, 0);
+            this.outerTableLayoutPanel.Controls.Add(this.buttonTableLayoutPanel, 1, 0);
             this.outerTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.outerTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.outerTableLayoutPanel.Name = "outerTableLayoutPanel";
@@ -307,6 +378,10 @@
             this.ShowIcon = false;
             this.Text = "Excel Merge Tool --------- Directed By KarosChen 仿冒必究";
             this.buttonTableLayoutPanel.ResumeLayout(false);
+            this.fileButtonGroupBox.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.sheetButtonGroupBox.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.fileTableLayoutPanel.ResumeLayout(false);
             this.fileTableLayoutPanel.PerformLayout();
             this.showTableLayoutPanel.ResumeLayout(false);
@@ -335,6 +410,11 @@
         private System.Windows.Forms.TableLayoutPanel showTableLayoutPanel;
         private System.Windows.Forms.TableLayoutPanel sheetTableLayoutPanel;
         private System.Windows.Forms.TableLayoutPanel outerTableLayoutPanel;
+        private System.Windows.Forms.GroupBox fileButtonGroupBox;
+        private System.Windows.Forms.GroupBox sheetButtonGroupBox;
+        private System.Windows.Forms.Button deleteExcelButton;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
 

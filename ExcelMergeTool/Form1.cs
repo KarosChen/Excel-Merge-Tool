@@ -20,7 +20,6 @@ namespace ExcelMergeTool
         private List<string> _allSheetsNameList;
         private ImageList _allSheetsImageList;
         int _isShowingFile = -1;
-        private ListViewItem clickedItem;
 
         public ExcelMergeForm()
         {
@@ -92,18 +91,22 @@ namespace ExcelMergeTool
 
         private void deleteExcelButton_Click(object sender, EventArgs e)
         {
-            string deletedFileName = addedExcelComboBox.SelectedItem.ToString();
-            _model.DeleteAllSheetsFromExcelName(deletedFileName);
-            _model.RemoveSourceFileName(deletedFileName);
-            addedExcelComboBox.Items.Remove(addedExcelComboBox.SelectedItem);
-            addedExcelComboBox.Text = "";
-            TreeNode[] fileNodes = selectedSheetsTreeView.Nodes.Find(deletedFileName, false);
-            selectedSheetsTreeView.Nodes.Remove(fileNodes[0]);
-            _isShowingFile = -1;
-            allSheetsListView.Items.Clear();
-            _allSheetsNameList.Clear();
-            _allSheetsImageList.Images.Clear();
-            setButtonEnableProperty();
+            DialogResult result = MessageBox.Show("同時會將已經選擇的表單一起刪除，請問要繼續嗎?", "警告", MessageBoxButtons.OKCancel);
+            if (result == DialogResult.OK)
+            {
+                string deletedFileName = addedExcelComboBox.SelectedItem.ToString();
+                _model.DeleteAllSheetsFromExcelName(deletedFileName);
+                _model.RemoveSourceFileName(deletedFileName);
+                addedExcelComboBox.Items.Remove(addedExcelComboBox.SelectedItem);
+                addedExcelComboBox.Text = "";
+                TreeNode[] fileNodes = selectedSheetsTreeView.Nodes.Find(deletedFileName, false);
+                selectedSheetsTreeView.Nodes.Remove(fileNodes[0]);
+                _isShowingFile = -1;
+                allSheetsListView.Items.Clear();
+                _allSheetsNameList.Clear();
+                _allSheetsImageList.Images.Clear();
+                setButtonEnableProperty();
+            }
         }
 
         private void addSelectedSheetButton_Click(object sender, EventArgs e)

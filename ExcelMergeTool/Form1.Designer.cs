@@ -38,8 +38,8 @@
             this.sheetButtonGroupBox = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.mergeButton = new System.Windows.Forms.Button();
-            this.addAllSheetsButton = new System.Windows.Forms.Button();
             this.deleteAllSelectedSheetsButton = new System.Windows.Forms.Button();
+            this.addAllSheetsButton = new System.Windows.Forms.Button();
             this.fileTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.allSheetsLabel = new System.Windows.Forms.Label();
             this.addedExcelComboBox = new System.Windows.Forms.ComboBox();
@@ -201,18 +201,6 @@
             this.mergeButton.UseVisualStyleBackColor = true;
             this.mergeButton.Click += new System.EventHandler(this.mergeButton_Click);
             // 
-            // addAllSheetsButton
-            // 
-            this.addAllSheetsButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.addAllSheetsButton.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.addAllSheetsButton.Location = new System.Drawing.Point(3, 72);
-            this.addAllSheetsButton.Name = "addAllSheetsButton";
-            this.addAllSheetsButton.Size = new System.Drawing.Size(122, 63);
-            this.addAllSheetsButton.TabIndex = 8;
-            this.addAllSheetsButton.Text = "加入所有的表單";
-            this.addAllSheetsButton.UseVisualStyleBackColor = true;
-            this.addAllSheetsButton.Click += new System.EventHandler(this.addAllSheetsButton_Click);
-            // 
             // deleteAllSelectedSheetsButton
             // 
             this.deleteAllSelectedSheetsButton.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -224,6 +212,18 @@
             this.deleteAllSelectedSheetsButton.Text = "刪除所有的表單";
             this.deleteAllSelectedSheetsButton.UseVisualStyleBackColor = true;
             this.deleteAllSelectedSheetsButton.Click += new System.EventHandler(this.deleteAllSelectedSheetsButton_Click);
+            // 
+            // addAllSheetsButton
+            // 
+            this.addAllSheetsButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.addAllSheetsButton.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.addAllSheetsButton.Location = new System.Drawing.Point(3, 72);
+            this.addAllSheetsButton.Name = "addAllSheetsButton";
+            this.addAllSheetsButton.Size = new System.Drawing.Size(122, 63);
+            this.addAllSheetsButton.TabIndex = 8;
+            this.addAllSheetsButton.Text = "加入所有的表單";
+            this.addAllSheetsButton.UseVisualStyleBackColor = true;
+            this.addAllSheetsButton.Click += new System.EventHandler(this.addAllSheetsButton_Click);
             // 
             // fileTableLayoutPanel
             // 
@@ -376,7 +376,7 @@
             this.MinimumSize = new System.Drawing.Size(1000, 600);
             this.Name = "ExcelMergeForm";
             this.ShowIcon = false;
-            this.Text = "Excel Merge Tool --------- Directed By KarosChen 仿冒必究";
+            this.Text = "Excel Merge Tool --------- Maked By KarosChen 抄襲必究";
             this.buttonTableLayoutPanel.ResumeLayout(false);
             this.fileButtonGroupBox.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);

@@ -1,6 +1,17 @@
 ExcelMergeTool.exe
 Microsoft.mshtml.dll
+Spire.Barcode.dll
 Spire.Common.dll
+Spire.DataExport.dll
+Spire.DataExport.ResourceMgr.dll
+Spire.Doc.dll
+Spire.DocViewer.Forms.dll
+Spire.Email.dll
 Spire.License.dll
+Spire.OfficeViewer.Forms.dll
 Spire.Pdf.dll
+Spire.PdfViewer.Asp.dll
+Spire.PdfViewer.Forms.dll
+Spire.Presentation.dll
+Spire.Spreadsheet.dll
 Spire.XLS.dll

@@ -8,16 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
-using Microsoft.Office.Interop.Word;
 using Spire.Xls;
-using WordLib = Microsoft.Office.Interop.Word;
-using ExcelLib = Microsoft.Office.Interop.Excel;
+using Spire.Doc;
+using Spire.Doc.Documents;
+using Spire.Doc.Fields;
 
 namespace ExcelMergeTool
 {
     class Model
     {
-        //private List<string> fileNames = new List<string>();
         private string _srcFilePath = "";
         private List<Workbook> _srcBooksList = new List<Workbook>();
         private List<string> _addedImagesPath = new List<string>();
@@ -149,36 +148,26 @@ namespace ExcelMergeTool
 
         public void AddImageToWord(string savePath)
         {
-            WordLib.Application wordApp = new WordLib.Application();
-            WordLib.Document newWordDoc = wordApp.Documents.Add();
-            WordLib.Range docRange = newWordDoc.Content;
-            object oCollapseEnd = WordLib.WdCollapseDirection.wdCollapseEnd;
-            newWordDoc.PageSetup.TopMargin = newWordDoc.Application.CentimetersToPoints((float)1.5);
-            newWordDoc.PageSetup.BottomMargin = newWordDoc.Application.CentimetersToPoints((float)1.5);
-            newWordDoc.PageSetup.LeftMargin = newWordDoc.Application.CentimetersToPoints((float)1.5);
-            newWordDoc.PageSetup.RightMargin = newWordDoc.Application.CentimetersToPoints((float)1.5);
-
+            Document newDoc = new Document();
+            Section section = newDoc.AddSection();
+            section.PageSetup.PageSize = PageSize.A4;
+            Paragraph para = section.AddParagraph();
             foreach (string imagePath in _addedImagesPath)
             {
                 using (Bitmap srcImage = Image.FromFile(imagePath) as Bitmap)
                 {
                     int start_x = 40;
-                    //int start_y = srcImage.Height - Convert.ToInt32(srcImage.Height * 0.9);
-                    //System.Drawing.Rectangle cropArea = new System.Drawing.Rectangle(start_x, start_y, srcImage.Width, Convert.ToInt32(srcImage.Height * 0.9));
                     int start_y = 40;
                     System.Drawing.Rectangle cropArea = new System.Drawing.Rectangle(start_x, start_y, srcImage.Width - 2 * start_x, srcImage.Height - 2 * start_y);
                     Bitmap desImage = srcImage.Clone(cropArea, srcImage.PixelFormat);
-                    Bitmap resizedImage = new Bitmap((Image)desImage, (int)(newWordDoc.PageSetup.PageWidth / 1.8), (int)(newWordDoc.PageSetup.PageHeight / 3.5));
-                    //Put image in Clipboard
-                    Clipboard.SetImage(resizedImage);
-                    docRange.Collapse(ref oCollapseEnd);
-                    docRange.Paste();
+                    Bitmap resizedImage = new Bitmap((Image)desImage, (int)(section.PageSetup.PageSize.Width / 1.85), (int)(section.PageSetup.PageSize.Height / 3.5));
 
+                    para.AppendPicture(resizedImage);
                 }
             }
-            newWordDoc.SaveAs2(savePath);
-            wordApp.Quit();
 
+            newDoc.SaveToFile(savePath, Spire.Doc.FileFormat.Docx);
+            newDoc = null;
             DeleteAllImageOnComputer();
         }
 
